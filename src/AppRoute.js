@@ -21,7 +21,6 @@
 // );
 // export default AppRouter;
 
-
 // import React from 'react';
 // import DataProvider from './context/DataProvider';
 
@@ -36,11 +35,11 @@
 
 // export default App;
 
-
-import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import Landing from './pages/Landing';
-import DataDisplay from './pages/DataDisplay';
+import React from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Landing from "./pages/Landing";
+import DataDisplay from "./pages/DataDisplay";
+import { TeamRoster } from "./components/TeamRoster";
 
 function App() {
   return (
@@ -48,10 +47,10 @@ function App() {
       <Switch>
         <Route exact path="/" component={Landing} />
         <Route path="/DataDisplay" component={DataDisplay} />
+        <Route path="/TeamRoster/:teamId" component={TeamRoster} />
       </Switch>
     </Router>
   );
 }
 
 export default App;
-

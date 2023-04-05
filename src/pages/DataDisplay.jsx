@@ -1,13 +1,13 @@
-import React from 'react';
-import DataProvider from '../context/DataProvider';
-import '../DataDisplay.css';
+import React from "react";
+import DataProvider from "../context/DataProvider";
+import "../DataDisplay.css";
 import ComparitiveChart from "../components/ComparitiveChart";
-import LineChart2 from '../components/LineChart2';
+import LineChart2 from "../components/LineChart2";
 
 const DataDisplay = () => {
-  const renderTable = teams => {
+  const renderTable = (teams) => {
     return (
-      <div className="data-table" style={{overflowX: 'auto !important'}}>
+      <div className="data-table" style={{ overflowX: "auto !important" }}>
         <table className="data-table">
           <thead>
             <tr>
@@ -33,10 +33,14 @@ const DataDisplay = () => {
             </tr>
           </thead>
           <tbody>
-            {teams.map(team => (
+            {teams.map((team) => (
               <tr key={team.id}>
                 <td>{team.id}</td>
-                <td>{team.name}</td>
+                <td>
+                  <a href={`http://localhost:3000/TeamRoster/${team.id}`}>
+                    {team.name}
+                  </a>
+                </td>
                 <td>{team.abbreviation}</td>
                 <td>{team.locationName}</td>
                 <td>{team.conference.name}</td>
@@ -63,21 +67,32 @@ const DataDisplay = () => {
   };
 
   return (
-<div>
+    <div>
       <h1>NHL Teams</h1>
       <DataProvider>
-        {teams => (
+        {(teams) => (
           <div>
             {renderTable(teams)}
             <h1>Analysis of Shots taken vs Goals Scored</h1>
-            {teams && <ComparitiveChart data={teams} x="shotsPerGame" y="goalsPerGame" />}
+            {teams && (
+              <ComparitiveChart
+                data={teams}
+                x="shotsPerGame"
+                y="goalsPerGame"
+              />
+            )}
             <h1>Analysis of Goals Scored and Conceded</h1>
-            {teams && <LineChart2 data={teams} x="team.teamStats[0].splits[0].stat.goalsAgainstPerGame" y="team.teamStats[0].splits[0].stat.goalsPerGame"/>}
+            {teams && (
+              <LineChart2
+                data={teams}
+                x="team.teamStats[0].splits[0].stat.goalsAgainstPerGame"
+                y="team.teamStats[0].splits[0].stat.goalsPerGame"
+              />
+            )}
           </div>
         )}
       </DataProvider>
     </div>
-    
   );
 };
 
