@@ -1,0 +1,82 @@
+body {
+    background-color: #111;
+  }
+  
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 0 auto;
+    margin-top: 30px;
+    max-width: 2000px;
+  }
+  
+  th, td {
+    text-align: center;
+    padding: 10px;
+  }
+  
+  th {
+    background-color: #FFA500;
+    color: #111;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 14px;
+  }
+  
+  td {
+    background-color: #111;
+    color: #fff;
+    font-size: 12px;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #222;
+  }
+  
+  tr:hover {
+    background-color: #F25F5C;
+    color: white;
+  }
+  
+  
+  h1 {
+    color: #FFA500;
+    font-size: 36px;
+    margin-top: 30px;
+    margin-bottom: 10px;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 1px 1px #000;
+    font-weight: bold;
+  }
+  
+  .custom-tooltip {
+    background-color: #FFA500;
+    color: #111;
+    font-size: 12px;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: left;
+    box-shadow: 2px 2px #111;
+  }
+  
+  .custom-tooltip .label {
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+  }
+  
+  .custom-tooltip .value {
+    margin-bottom: 5px;
+  }
+  
+  .custom-tooltip .icon {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    background-color: #111;
+    margin-left: 5px;
+    border-radius: 50%;
+  }
+  
