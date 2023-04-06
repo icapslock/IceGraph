@@ -1,10 +1,12 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import DataProvider from "../context/DataProvider";
 import "../DataDisplay.css";
 import ComparitiveChart from "../components/ComparitiveChart";
 import LineChart2 from "../components/LineChart2";
 
 const DataDisplay = () => {
+  const routerHistory = useHistory();
   const renderTable = (teams) => {
     return (
       <div className="data-table" style={{ overflowX: "auto !important" }}>
@@ -34,13 +36,13 @@ const DataDisplay = () => {
           </thead>
           <tbody>
             {teams.map((team) => (
-              <tr key={team.id}>
+              <tr
+                key={team.id}
+                style={{ cursor: "pointer" }}
+                onClick={() => routerHistory.push(`/TeamRoster/${team.id}`)}
+              >
                 <td>{team.id}</td>
-                <td>
-                  <a href={`http://localhost:3000/TeamRoster/${team.id}`}>
-                    {team.name}
-                  </a>
-                </td>
+                <td>{team.name}</td>
                 <td>{team.abbreviation}</td>
                 <td>{team.locationName}</td>
                 <td>{team.conference.name}</td>
