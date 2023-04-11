@@ -40,7 +40,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Landing from "./pages/Landing";
 import DataDisplay from "./pages/DataDisplay";
 import { TeamRoster } from "./components/TeamRoster";
-import { PlayerGoalHeatmap } from "./components/PlayerGoalHeatmap";
+import { PlayerStats } from "./pages/PlayerStats";
 
 function App() {
   return (
@@ -48,8 +48,8 @@ function App() {
       <Switch>
         <Route exact path="/" component={Landing} />
         <Route path="/DataDisplay" component={DataDisplay} />
-        <Route path="/TeamRoster/:teamId" component={TeamRoster} exact />
-        <Route path="/TeamRoster/:teamId/:playerId" component={PlayerGoalHeatmap} />
+        <Route path="/TeamRoster/:teamId" component={TeamRoster} />
+        <Route path="/Player/:playerId" component={PlayerStats} />
       </Switch>
     </Router>
   );
