@@ -62,7 +62,7 @@ const DataDisplay = () => {
   };
 
 
-  //const COLOURSSS = [  "#8884d8",  "#82ca9d",  "#ffc658",  "#0088FE",  "#00C49F",  "#FFBB28",  "#FF8042",  "#e6194B",  "#f58231",  "#ffe119"];
+  const COLOURSSS = [  "#8884d8",  "#82ca9d",  "#ffc658",  "#0088FE",  "#00C49F",  "#FFBB28",  "#FF8042",  "#e6194B",  "#f58231",  "#ffe119"];
 
 
   return (
@@ -124,13 +124,13 @@ const DataDisplay = () => {
                 <RadialBarChart
                   width={2000}
                   height={750}
-                  data={teams.sort((a, b) => b.teamStats[0].splits[0].stat.faceOffWinPercentage - a.teamStats[0].splits[0].stat.faceOffWinPercentage).slice(0, 10)}
+                  data={(teams.sort((a, b) => b.teamStats[0].splits[0].stat.faceOffWinPercentage - a.teamStats[0].splits[0].stat.faceOffWinPercentage).slice(0, 10)).map((team, index) => ({...team, fill: COLOURSSS[index]}))}
                   innerRadius="10%"
                   outerRadius="80%"
                   startAngle={0}
                   endAngle={270}
                   barSize={50}
-                  fill = "grey"
+                  fill = {COLOURSSS}
                   dataKey="teamStats[0].splits[0].stat.faceOffWinPercentage"
                 >
                   <RadialBar dataKey="teamStats[0].splits[0].stat.faceOffWinPercentage" name = "Faceoff Win Percentage:" label={{ fill: 'black', position: 'inside' }} background clockWise={false}/>

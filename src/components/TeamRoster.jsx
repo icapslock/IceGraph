@@ -201,7 +201,7 @@ export const TeamRoster = () => {
       </table>
       <div style={{ marginTop: '100px', marginBottom: '100px' }}>
         <h1>
-          Distribution amongst the top 5 goal scorers
+          Distribution amongst the top goal scorers of the team
         </h1>
         <PieChart width={2000} height={500}>
         <Pie data={scores} dataKey="score" nameKey="name" cx="50%" cy="50%" outerRadius={200} fill="#8884d8" label={({ name }) => name}>
