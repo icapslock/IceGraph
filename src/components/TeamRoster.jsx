@@ -138,34 +138,6 @@ export const TeamRoster = () => {
   // const s = []
   const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#FF1642'];
 
-  // useEffect(() => {
-  //   let s = [];
-  //   Promise.all(
-  //     teamData.roster.roster.map((v) => {
-  //       return fetch(
-  //         `https://statsapi.web.nhl.com/api/v1/people/${v.person.id}/stats?stats=yearByYear`
-  //       )
-  //         .then((response) => response.json())
-  //         .then((data) => {
-  //           const stats = data.stats[0].splits.find(
-  //             (s) => s.season === "20212022"
-  //           ).stat;
-  //           return {
-  //             name: v.person.fullName,
-  //             score: stats.goals,
-  //           };
-  //         })
-  //         .catch((error) => {
-  //           console.error(error);
-  //           return { name: v.person.fullName, score: 0 };
-  //         });
-  //     })
-  //   ).then((results) => {
-  //     s = results.slice(0, 5);
-  //     setScores(s);
-  //   });
-  // }, [teamData]);
-  
   useEffect(() => {
     let s = [];
     Promise.all(
@@ -191,7 +163,7 @@ export const TeamRoster = () => {
       })
     ).then((results) => {
       // Sort the results array by score in descending order and slice the top 5
-      s = results.sort((a, b) => b.score - a.score).slice(0, 5);
+      s = results.sort((a, b) => b.score - a.score).slice(0, 10);
       setScores(s);
     });
   }, [teamData]);

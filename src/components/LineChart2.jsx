@@ -24,8 +24,8 @@ const LineChart2 = ({ data, goalsPerGame, goalsAgainstPerGame}) => {
       <YAxis/>
       <Tooltip content={<CustomTooltip />} />
       <Legend />
-      <Line type="monotone" dataKey={"teamStats[0].splits[0].stat.goalsAgainstPerGame"} stroke="rgb(253, 86, 78)" activeDot={{ r: 8 }} />
-      <Line type="monotone" dataKey={"teamStats[0].splits[0].stat.goalsPerGame"} stroke="rgb(254, 182, 89)" activeDot={{ r: 8 }} />
+      <Line type="monotone" dataKey={"teamStats[0].splits[0].stat.goalsAgainstPerGame"} stroke="rgb(253, 86, 78)" activeDot={{ r: 8 }} name = "Goals Conceded/game"/>
+      <Line type="monotone" dataKey={"teamStats[0].splits[0].stat.goalsPerGame"} stroke="rgb(254, 182, 89)" activeDot={{ r: 8 }} name = "Goals Scored/game"/>
     </LineChart>
   );
 };
