@@ -7,116 +7,118 @@ import { PieChart, Pie, Tooltip, Cell, ScatterChart,
   YAxis,
   CartesianGrid, Legend, ZAxis } from "recharts";
 
+const SEASON = '20212022';
 const DEFAULT_PLAYER_IMG_URL =
   "https://cms.nhl.bamgrid.com/images/headshots/current/60x60/skater.jpg";
-  const PLAYER_DATA_HEADER = [
-    "Player",
-    "Number",
-    "Position",
-    "Shoot Catches",
-    // "Height",
-    // "Weight",
-    // "Birth Date",
-    // "Birthplace",
-    "Goals",
-    "Assists",
-    "Games",
-    "Shots",
-    "Blocked",
-    "Points"
-  ];
+const PLAYER_DATA_HEADER = [
+  "Player",
+  "Number",
+  "Position",
+  "Shoot Catches",
+  // "Height",
+  // "Weight",
+  // "Birth Date",
+  // "Birthplace",
+  "Goals",
+  "Assists",
+  "Games",
+  "Shots",
+  "Blocked",
+  "Points"
+];
+
+const PLAYER_DATA_FIELDS = [
+  "fullName",
+  "primaryNumber",
+  "pos",
+  "shootsCatches",
+  // "height",
+  // "weight",
+  // "birthDate",
+  // "birthplace",
+  "goals",
+  "assists",
+  "games",
+  "shots",
+  "blocked",
+  "points"
+];
   
-  const PLAYER_DATA_FIELDS = [
-    "fullName",
-    "primaryNumber",
-    "pos",
-    "shootsCatches",
-    // "height",
-    // "weight",
-    // "birthDate",
-    // "birthplace",
-    "goals",
-    "assists",
-    "games",
-    "shots",
-    "blocked",
-    "points"
-  ];
-  
-  const Player = ({ playerId }) => {
-    const [playerData, setPlayerData] = useState(undefined);
-    const [playerImgUrl, setPlayerImgUrl] = useState(
-      `https://cms.nhl.bamgrid.com/images/headshots/current/60x60/${playerId}.jpg`
-    );
-    const [playerStats, setPlayerStats] = useState(undefined);
-  
-    useEffect(() => {
-      fetch(`https://statsapi.web.nhl.com/api/v1/people/${playerId}`)
-        .then((response) => response.json())
-        .then((data) => setPlayerData(data.people[0]))
-        .catch((error) => console.error(error));
-  
-      fetch(`https://statsapi.web.nhl.com/api/v1/people/${playerId}/stats?stats=yearByYear`)
-        .then((response) => response.json())
-        .then((data) => {
-          const stats = data.stats[0].splits.find((s) => s.season === "20212022").stat;
-          setPlayerStats({
-            goals: stats.goals,
-            assists: stats.assists,
-            shots: stats.shots,
-            games: stats.games,
-            blocked: stats.blocked,
-            points: stats.points,
-          });
-        })
-        .catch((error) => console.error(error));
-    }, [playerId]);
-  
-    if (playerData && playerStats) {
-      playerData.birthplace = [
-        playerData.birthCity,
-        playerData.birthStateProvince, // might be undefined
-        playerData.birthCountry,
-      ]
-        .filter((val) => val)
-        .join(", ");
-      playerData.pos = playerData.primaryPosition.abbreviation;
-      playerData.goals = playerStats.goals;
-      playerData.assists = playerStats.assists;
-      playerData.games = playerStats.games;
-      playerData.shots = playerStats.shots;
-      playerData.blocked = playerStats.blocked;
-      playerData.points = playerStats.points;
-    }
-  
-    if (!playerData || !playerStats) {
-      // data not loaded
-      return <></>;
-    }
-  
-    return (
-      <tr key={playerId}>
-        <td>
-          <div style={{ display: "flex", alignItems: "center" }}>
-            <div>
-              <img
-                src={playerImgUrl}
-                alt="player-img"
-                style={{ width: "40px", height: "40px", borderRadius: "20px" }}
-                onError={() => {
-                  setPlayerImgUrl(DEFAULT_PLAYER_IMG_URL);
-                }}
-              />
-            </div>
-            <div style={{ paddingLeft: "20px" }}>{playerData["fullName"]}</div>
+const Player = ({ playerId }) => {
+  const routerHistory = useHistory();
+  const [playerData, setPlayerData] = useState(undefined);
+  const [playerImgUrl, setPlayerImgUrl] = useState(
+    `https://cms.nhl.bamgrid.com/images/headshots/current/60x60/${playerId}.jpg`
+  );
+  const [playerStats, setPlayerStats] = useState(undefined);
+
+  useEffect(() => {
+    fetch(`https://statsapi.web.nhl.com/api/v1/people/${playerId}`)
+      .then((response) => response.json())
+      .then((data) => setPlayerData(data.people[0]))
+      .catch((error) => console.error(error));
+
+    fetch(`https://statsapi.web.nhl.com/api/v1/people/${playerId}/stats?stats=statsSingleSeason&season=${SEASON}`)
+      .then((response) => response.json())
+      .then((data) => {
+        const stats = data.stats[0].splits[0].stat;
+        setPlayerStats({
+          goals: stats.goals,
+          assists: stats.assists,
+          shots: stats.shots,
+          games: stats.games,
+          blocked: stats.blocked,
+          points: stats.points,
+        });
+      })
+      .catch((error) => console.error(error));
+  }, [playerId]);
+
+  if (playerData && playerStats) {
+    playerData.birthplace = [
+      playerData.birthCity,
+      playerData.birthStateProvince, // might be undefined
+      playerData.birthCountry,
+    ]
+      .filter((val) => val)
+      .join(", ");
+    playerData.pos = playerData.primaryPosition.abbreviation;
+    playerData.goals = playerStats.goals;
+    playerData.assists = playerStats.assists;
+    playerData.games = playerStats.games;
+    playerData.shots = playerStats.shots;
+    playerData.blocked = playerStats.blocked;
+    playerData.points = playerStats.points;
+  }
+
+  if (!playerData || !playerStats) {
+    // data not loaded
+    return <></>;
+  }
+
+  return (
+    <tr key={playerId} onClick={() => routerHistory.push(`/Player/${playerId}`)} style={{ cursor: 'pointer' }}>
+      <td>
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <div>
+            <img
+              src={playerImgUrl}
+              alt="player-img"
+              style={{ width: "40px", height: "40px", borderRadius: "20px" }}
+              onError={() => {
+                setPlayerImgUrl(DEFAULT_PLAYER_IMG_URL);
+              }}
+            />
           </div>
-        </td>
-        {PLAYER_DATA_FIELDS.slice(1).map((field) => (
-          <td key={field}>{playerData[field]}</td>
-        ))}
-      </tr>
-    );
-  };
+          <div style={{ paddingLeft: "20px" }}>{playerData["fullName"]}</div>
+        </div>
+      </td>
+      {PLAYER_DATA_FIELDS.slice(1).map((field) => (
+        <td key={field}>{playerData[field]}</td>
+      ))}
+    </tr>
+  );
+};
   
 export const TeamRoster = () => {
   const routerHistory = useHistory();
